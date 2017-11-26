@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello world</title>
+    <script src = "/socket.io/socket.io.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="/js/public.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script>
+        var socket = io();
+        socket.on('news', function(tempvalue) {
+            console.log("value 1: "+tempvalue.value);
+            google.charts.load('current', {'packages':['gauge']});
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+
+                var data = google.visualization.arrayToDataTable([
+                    ['Label', 'Value'],
+                    ['Inlet °C', Math.round(tempvalue.value)]
+
+                ]);
+
+                var options = {
+                    width: 800, height: 300,
+                    redFrom: 90, redTo: 100,
+                    yellowFrom:75, yellowTo: 90,
+                    minorTicks: 5
+                };
+
+                var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+
+                chart.draw(data, options);
+
+
+            }
+            $('#tempval1').html(tempvalue.value);
+
+        });
+        socket.on('tempera', function(tempvalue) {
+            google.charts.load('current', {'packages':['gauge']});
+            google.charts.setOnLoadCallback(drawChart);
+            console.log("value 2: "+tempvalue.value);
+            function drawChart() {
+
+                var data = google.visualization.arrayToDataTable([
+                    ['Label', 'Value'],
+                    ['Outlet °C', Math.round(tempvalue.value)]
+
+                ]);
+
+                var options = {
+                    width: 800, height: 300,
+                    redFrom: 90, redTo: 100,
+                    yellowFrom:75, yellowTo: 90,
+                    minorTicks: 5
+                };
+
+                var chart = new google.visualization.Gauge(document.getElementById('chart_div2'));
+
+                chart.draw(data, options);
+
+
+            }
+            $('#tempval2').html(tempvalue.value);
+
+        });
+        socket.on('difference', function(tempvalue) {
+            google.charts.load('current', {'packages':['gauge']});
+            google.charts.setOnLoadCallback(drawChart);
+            console.log("value 2: "+tempvalue.value);
+            function drawChart() {
+
+                var data = google.visualization.arrayToDataTable([
+                    ['Label', 'Value'],
+                    ['Gap °C', Math.round(tempvalue.value)]
+
+                ]);
+
+                var options = {
+                    width: 800, height: 300,
+                    redFrom: 90, redTo: 100,
+                    yellowFrom:75, yellowTo: 90,
+                    minorTicks: 5
+                };
+
+                var chart = new google.visualization.Gauge(document.getElementById('chart_div3'));
+
+                chart.draw(data, options);
+
+
+            }
+            $('#tempval3').html(tempvalue.value);
+
+        });
+
+        socket.on('message', function(initialMessage) {
+            console.log(initialMessage.value);
+            if(initialMessage.value == null){
+                document.getElementById('noticeMessage').innerHTML = 'Maintenance needs to be done in 0 Days';
+            }else{
+                document.getElementById('noticeMessage').innerHTML = 'Maintenance needs to be done in  ' + initialMessage.value +' Days';
+
+            }
+
+        });
+
+    </script>
+</head>
+
+<body ng-app="iotApp" ng-controller="mainCtrl">
+
+
+    <section ng-hide="tempShow"  class="hero is-medium">
+        <div class="hero-body has-text-centered">
+            <div class="container">
+                <button class="button is-info is-large" ng-click="appearChange()">Click here to Start</button>
+            </div>
+        </div>
+    </section>
+
+    <div ng-show="tempShow">
+
+        <section class="hero is-info">
+            <div class="hero-body">
+                <div class="container has-text-centered">
+                    <h1 class="title">
+                        CodeT
+                    </h1>
+                    <h2 class="subtitle">
+                        You will love this!
+                    </h2>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <nav class="level">
+                    <div class="level-item has-text-centered">
+                        <div class="content flex">
+                            <p id="chart_div"></p>
+                            <h1 id="tempval1"></h1>
+                        </div>
+                    </div>
+                    <div class="level-item has-text-centered">
+                        <div class="content flex">
+                            <p id="chart_div2"></p>
+                            <h1 id="tempval2"></h1>
+                        </div>
+                    </div>
+                    <div class="level-item has-text-centered">
+                        <div class="content flex">
+                            <p id="chart_div3"></p>
+                            <h1 id="tempval3"></h1>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </section>
+
+        <div class="card container has-text-centered">
+            <div class="card-content">
+                <p class="title" id="noticeMessage">
+                    The system is learning ........!!!
+                </p>
+            </div>
+        </div>
+
+        <section class="section">
+            <div class="container">
+
+                <div class="field has-addons has-addons-right">
+                    <div class="control has-icons-left">
+                        <input class="input is-info is-medium" id="date" type="date" placeholder="Select a Date here">
+                        <div class="icon is-medium is-left">
+                            <i class="fa fa-search"></i>
+                        </div>
+                    </div>
+                    <p class="control">
+                        <a class="button is-info is-medium" id="tempHistory">
+                            <span>Search</span>
+                        </a>
+                    </p>
+                </div>
+
+
+                <table class="table is-striped is-fullwidth" id="pio">
+                    <thead>
+                    <tr>
+                        <th><abbr title="Position">Pos</abbr></th>
+                        <th>Team</th>
+                        <th><abbr title="Played">Pld</abbr></th>
+                        <th><abbr title="Won">W</abbr></th>
+                        <th><abbr title="Goal difference">GD</abbr></th>
+                        <th><abbr title="Points">Pts</abbr></th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr>
+                        <th>1</th>
+                        <td><a href="https://en.wikipedia.org/wiki/Leicester_City_F.C." title="Leicester City F.C.">Leicester City</a> <strong>(C)</strong>
+                        </td>
+                        <td>38</td>
+                        <td>36</td>
+                        <td>+32</td>
+                        <td>81</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+    </div>
+
+</body>
+<script>
+    $(function(){
+
+        var $date = $('#date');
+        $('#tempHistory').on('click',function(){
+            var data = {
+                date : $date.val()
+            };
+            $.ajax({
+                type:'POST',
+                url:'/temphistory',
+                data:data,
+                success:function(response)
+                    {
+                        console.log(response[0].inletTemp);
+                        $.each(response, function(index, element) {
+                            console.log(index);
+                            console.log(element);
+                            $('#pio').append('<tr><td>' + "Hello" + '</td><td>' + "Hello" + '</td><td>' + "Hello" + '</td><td>' + "Hello" + '</td></tr>');
+                        });
+
+
+                },
+                error: function(){
+                    alert('Error occurred while adding new buses! Try again later');
+                }
+            });
+            var selectedSeats = [];
+        });
+
+    });
+</script>
+</html>
+
