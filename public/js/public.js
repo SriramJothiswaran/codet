@@ -16,4 +16,17 @@ app.controller('mainCtrl', function ($scope,$http) {
         });
 
     }
+    $scope.resetSystem = function(){
+        $http({
+            method: 'POST',
+            url: '/reset'
+        }).then(function successCallback(response) {
+            alert('System has been reset');
+
+        }, function errorCallback(response) {
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+        });
+
+    }
 });

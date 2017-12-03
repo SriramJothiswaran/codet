@@ -49,8 +49,8 @@ const predictModel = mongoose.model('predictModel', predictSchema);
 
 
 
-//mongoose.connect('mongodb://localhost/tempapp');
-mongoose.connect('mongodb://codet:codet123@ds119436.mlab.com:19436/codet');
+mongoose.connect('mongodb://localhost/tempapp');
+//mongoose.connect('mongodb://codet:codet123@ds119436.mlab.com:19436/codet');
 
 
 
@@ -246,6 +246,19 @@ app.post('/data', function (req, res) {
 
         }
     });
+});
+
+
+app.post('/reset', function (req, res) {
+    console.log('inside reset');
+    predictModel.collection.drop();
+    tempModel.collection.drop();
+    startModel.collection.drop();
+    compareModel.collection.drop();
+    res.send('hi');
+
+
+
 });
 
 app.post('/temphistory',function(req,res){

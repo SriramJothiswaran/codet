@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Hello world</title>
+    <title>CodeT | Temperature Monitoring System</title>
     <script src = "/socket.io/socket.io.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
-    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="/js/angular.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/charts.js"></script>
     <script src="/js/public.js"></script>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css">
+    <link rel="stylesheet" href="/css/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/bulma.min.css">
 
     <link rel="stylesheet" href="/css/style.css">
     <script>
@@ -121,6 +121,8 @@
         <div class="hero-body has-text-centered">
             <div class="container">
                 <button class="button is-info is-large" ng-click="appearChange()">Click here to Start</button>
+                <button class="button is-danger is-large" ng-click="resetSystem()">Reset</button>
+
             </div>
         </div>
     </section>
@@ -173,52 +175,52 @@
             </div>
         </div>
 
-        <section class="section">
-            <div class="container">
+        <!--<section class="section">-->
+            <!--<div class="container">-->
 
-                <div class="field has-addons has-addons-right">
-                    <div class="control has-icons-left">
-                        <input class="input is-info is-medium" id="date" type="date" placeholder="Select a Date here">
-                        <div class="icon is-medium is-left">
-                            <i class="fa fa-search"></i>
-                        </div>
-                    </div>
-                    <p class="control">
-                        <a class="button is-info is-medium" id="tempHistory">
-                            <span>Search</span>
-                        </a>
-                    </p>
-                </div>
+                <!--<div class="field has-addons has-addons-right">-->
+                    <!--<div class="control has-icons-left">-->
+                        <!--<input class="input is-info is-medium" id="date" type="date" placeholder="Select a Date here">-->
+                        <!--<div class="icon is-medium is-left">-->
+                            <!--<i class="fa fa-search"></i>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<p class="control">-->
+                        <!--<a class="button is-info is-medium" id="tempHistory">-->
+                            <!--<span>Search</span>-->
+                        <!--</a>-->
+                    <!--</p>-->
+                <!--</div>-->
 
 
-                <table class="table is-striped is-fullwidth" id="pio">
-                    <thead>
-                    <tr>
-                        <th><abbr title="Position">Pos</abbr></th>
-                        <th>Team</th>
-                        <th><abbr title="Played">Pld</abbr></th>
-                        <th><abbr title="Won">W</abbr></th>
-                        <th><abbr title="Goal difference">GD</abbr></th>
-                        <th><abbr title="Points">Pts</abbr></th>
-                    </tr>
-                    </thead>
+                <!--<table class="table is-striped is-fullwidth" id="pio">-->
+                    <!--<thead>-->
+                    <!--<tr>-->
+                        <!--<th><abbr title="Position">Pos</abbr></th>-->
+                        <!--<th>Team</th>-->
+                        <!--<th><abbr title="Played">Pld</abbr></th>-->
+                        <!--<th><abbr title="Won">W</abbr></th>-->
+                        <!--<th><abbr title="Goal difference">GD</abbr></th>-->
+                        <!--<th><abbr title="Points">Pts</abbr></th>-->
+                    <!--</tr>-->
+                    <!--</thead>-->
 
-                    <tbody>
-                    <tr>
-                        <th>1</th>
-                        <td><a href="https://en.wikipedia.org/wiki/Leicester_City_F.C." title="Leicester City F.C.">Leicester City</a> <strong>(C)</strong>
-                        </td>
-                        <td>38</td>
-                        <td>36</td>
-                        <td>+32</td>
-                        <td>81</td>
-                    </tr>
+                    <!--<tbody>-->
+                    <!--<tr>-->
+                        <!--<th>1</th>-->
+                        <!--<td><a href="https://en.wikipedia.org/wiki/Leicester_City_F.C." title="Leicester City F.C.">Leicester City</a> <strong>(C)</strong>-->
+                        <!--</td>-->
+                        <!--<td>38</td>-->
+                        <!--<td>36</td>-->
+                        <!--<td>+32</td>-->
+                        <!--<td>81</td>-->
+                    <!--</tr>-->
 
-                    </tbody>
-                </table>
-            </div>
+                    <!--</tbody>-->
+                <!--</table>-->
+            <!--</div>-->
 
-        </section>
+        <!--</section>-->
 
     </div>
 
